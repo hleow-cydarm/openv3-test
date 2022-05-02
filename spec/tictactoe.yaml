@@ -2,27 +2,27 @@ openapi: 3.1.0
 info:
   title: Tic Tac Toe
   description: |
-    This API allows writing down marks on a Tic Tac Toe board
-    and requesting the state of the board or of individual squares.
+    This API allows writing down marks on a Tic Tac Toe Board
+    and requesting the state of the Board or of individual squares.
   version: 1.0.0
 tags:
   - name: Gameplay
 paths:
-  # Whole board operations
+  # Whole Board operations
   /board:
     get:
-      summary: Get the whole board
-      description: Retrieves the current state of the board and the winner.
+      summary: Get the whole Board
+      description: Retrieves the current state of the Board and the Winner.
       tags:
         - Gameplay
-      operationId: get-board
+      operationId: get-Board
       responses:
         "200":
           description: "OK"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/status"
+                $ref: "#/components/schemas/Status"
 
   # Single square operations
   /board/{row}/{column}:
@@ -30,7 +30,7 @@ paths:
       - $ref: "#/components/parameters/rowParam"
       - $ref: "#/components/parameters/columnParam"
     get:
-      summary: Get a single board square
+      summary: Get a single Board square
       description: Retrieves the requested square.
       tags:
         - Gameplay
@@ -41,17 +41,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/mark"
+                $ref: "#/components/schemas/Mark"
         "400":
           description: The provided parameters are incorrect
           content:
             text/html:
               schema:
-                $ref: "#/components/schemas/errorMessage"
-              example: "Illegal coordinates"
+                $ref: "#/components/schemas/ErrorMessage"
+              example: "Illegal Coordinates"
     put:
-      summary: Set a single board square
-      description: Places a mark on the board and retrieves the whole board and the winner (if any).
+      summary: Set a single Board square
+      description: Places a Mark on the Board and retrieves the whole Board and the Winner (if any).
       tags:
         - Gameplay
       operationId: put-square
@@ -60,23 +60,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/mark"
+              $ref: "#/components/schemas/Mark"
       responses:
         "200":
           description: "OK"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/status"
+                $ref: "#/components/schemas/Status"
         "400":
           description: The provided parameters are incorrect
           content:
             text/html:
               schema:
-                $ref: "#/components/schemas/errorMessage"
+                $ref: "#/components/schemas/ErrorMessage"
               examples:
                 illegalCoordinates:
-                  value: "Illegal coordinates."
+                  value: "Illegal Coordinates."
                 notEmpty:
                   value: "Square is not empty."
                 invalidMark:
@@ -85,35 +85,35 @@ paths:
 components:
   parameters:
     rowParam:
-      description: Board row (vertical coordinate)
+      description: Board row (vertical Coordinate)
       name: row
       in: path
       required: true
       schema:
-        $ref: "#/components/schemas/coordinate"
+        $ref: "#/components/schemas/Coordinate"
     columnParam:
-      description: Board column (horizontal coordinate)
+      description: Board column (horizontal Coordinate)
       name: column
       in: path
       required: true
       schema:
-        $ref: "#/components/schemas/coordinate"
+        $ref: "#/components/schemas/Coordinate"
   schemas:
-    errorMessage:
+    ErrorMessage:
       type: string
       maxLength: 256
       description: A text message describing an error
-    coordinate:
+    Coordinate:
       type: integer
       minimum: 1
       maximum: 3
       example: 1
-    mark:
+    Mark:
       type: string
       enum: [".", "X", "O"]
-      description: Possible values for a board square. `.` means empty square.
+      description: Possible values for a Board square. `.` means empty square.
       example: "."
-    board:
+    Board:
       type: array
       maxItems: 3
       minItems: 3
@@ -122,16 +122,16 @@ components:
         maxItems: 3
         minItems: 3
         items:
-          $ref: "#/components/schemas/mark"
-    winner:
+          $ref: "#/components/schemas/Mark"
+    Winner:
       type: string
       enum: [".", "X", "O"]
       description: Winner of the game. `.` means nobody has won yet.
       example: "."
-    status:
+    Status:
       type: object
       properties:
-        winner:
-          $ref: "#/components/schemas/winner"
-        board:
-          $ref: "#/components/schemas/board"
+        Winner:
+          $ref: "#/components/schemas/Winner"
+        Board:
+          $ref: "#/components/schemas/Board"
