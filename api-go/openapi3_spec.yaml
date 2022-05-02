@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: Tic Tac Toe
+  description: |
+    This API allows writing down marks on a Tic Tac Toe Board
+    and requesting the state of the Board or of individual squares.
+  version: 1.0.0
+tags:
+  - name: Gameplay
+paths:
+  # Whole Board operations
+  /items:
+    get:
+      summary: Get the whole Board
+      description: Retrieves the current state of the Board and the Winner.
+      tags:
+        - Gameplay
+      operationId: get-Board
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+
+              
