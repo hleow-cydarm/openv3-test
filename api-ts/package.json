@@ -1,0 +1,14 @@
+{
+  "name": "api-ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv": "^8.11.0",
+    "openapi-typescript": "^5.2.0",
+    "openapi-typescript-validator": "^3.2.0"
+  }, 
+  "scripts": {
+    "generate": "node genValidators.js"
+  }
+}
