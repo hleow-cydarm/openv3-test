@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Simple User API
+  description: A simple API to illustrate OpenAPI concepts
+
+# servers:
+#   - url: https://example.io/v1
+
+paths:
+  # Whole User
+  /user:
+    get:
+      description: Returns a list of user
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+          "400":
+            description: Invalid request
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+    post:
+      description: create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+
+      responses:
+        "201":
+          description: Successfully created a new user
+
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /user/{username}:
+    get:
+      description: Obtain information about a user from his or her unique username
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Successfully returned a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+# Basic authentication
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+      properties:
+        name:
+          type: string
+        username:
+          type: string
