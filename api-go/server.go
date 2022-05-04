@@ -69,7 +69,7 @@ func handleRequest(router routers.Router, httpReq *http.Request) {
 	method := route.Method
 
 	if path == "/users" && method == "POST" {
-		return
+		return // return the things here 
 	}
 
 	if path == "/users" && pathParams["username"] != "" && httpReq.Method == "GET" {
@@ -103,7 +103,8 @@ func validateFunc(router routers.Router, ctx context.Context, httpReq *http.Requ
 		return fmt.Errorf("validate request err: %v", err)
 	}
 
-	// actually process the request
+	respCode, respBody, respContentType := handleRequest(router, httpReq)
+
 
 	log.Println("Path checked")
 	return nil
