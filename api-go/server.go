@@ -54,11 +54,11 @@ func handleRequest(route *routers.Route, httpReq *http.Request, pathParams map[s
 		return http.StatusCreated, &User{Name: "created test user", Username: "created test userName"}
 	}
 
-	if path == "/user/{username}" && pathParams["username"] != "" && httpReq.Method == "GET" {
+	if path == "/user/{username}" && method == http.MethodGet {
 		return http.StatusOK, &User{Name: "found user", Username: "found username " + pathParams["username"]}
 	}
 
-	if path == "/user" && httpReq.Method == "GET" {
+	if path == "/user" && method == http.MethodGet {
 		return http.StatusOK, []*User{{Name: "user 1", Username: "user 1"}, {Name: "user 2", Username: "user 2"}}
 	}
 	return 500, nil
